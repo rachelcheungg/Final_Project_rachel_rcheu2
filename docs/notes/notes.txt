@@ -11,3 +11,18 @@ Ideas & Selection Rationale:
         - users can rate the task (was it boring? fun?)
 For the final project, I will do the boredom website.
 I think it would be a fun app to build.
+
+Wireframe Notes:
+I only have an idea for the homepage currently.
+On the homepage, there are two buttons.
+One for randomly generating a task from a database and one for getting a task from another user.
+For a randomly generated task, users have the option to choose which category (e.g., outdoors, indoors, quiet, adventurous) and what type (productive or fun) of task it is.
+
+Branching Strategy:
+I chose to use the GitHub Flow branching strategy because it keeps things simple.
+There will be a main branch and a features branch.
+Each feature will generally be the assignment for the week.
+
+Branch Usage Reflections:
+I named my branch "features" for the time being since we're just getting started.
+I was able to create, commit, and push without any issues.
