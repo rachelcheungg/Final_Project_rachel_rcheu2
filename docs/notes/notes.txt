@@ -1,0 +1,13 @@
+Ideas & Selection Rationale:
+* Final Project Ideas:
+    * hangout place ranker
+        - rate places users have been with friends
+        - community feed (like Instagram FYP)
+        - users can post throughts and their review of the place
+    * boredom website
+        - users can generate a task to do when they're bored
+        - live task exchange feature where two users can give each other a task to complete
+        - random task generator can also give more personalized recommendations based on location or personal preferences
+        - users can rate the task (was it boring? fun?)
+For the final project, I will do the boredom website.
+I think it would be a fun app to build.
