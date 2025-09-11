@@ -26,3 +26,12 @@ Each feature will generally be the assignment for the week.
 Branch Usage Reflections:
 I named my branch "features" for the time being since we're just getting started.
 I was able to create, commit, and push without any issues.
+
+Django Setup:
+I chose the name "task_generator" because it's my main project goal: to build a website that generates random tasks.
+I named the startapp folder "homepage" because that's where I imagine I'll start.
+It was configured correctly.
+
+Virtual Environment Choices:
+I chose to use my own virtual environment.
+It's more ideal for Python-only projects and I mainly just prefer this over the conda environment.
