@@ -1,4 +1,3 @@
-The boredom websites gives users a randomly generated task to complete when bored.
-Tasks can either be fun or productive.
-Users can also request a task from a certain category (outdoors vs. indoors, or fun vs. productive).
-There will also be a feature where two users can give each other a task to complete.
+This project is a Django-based web application designed to streamline the apartment hunting and subleasing process for users. 
+The goal is to create a centralized platform where users can browse available apartment complexes, view their locations on an 
+interactive map, post their own subleases, and track personal savings goals related to renting or furnishing an apartment.
