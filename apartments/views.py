@@ -10,12 +10,12 @@ from django.urls import reverse_lazy
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from .forms_auth import UserSignUpForm
 from django.views.generic import ListView
 from django.db.models import Q
 from .models import Apartment
 
-class ApartmentListView(ListView):
+class ApartmentListView(LoginRequiredMixin, ListView):
     model = Apartment
     template_name = "apartments/apartment_list.html"
     context_object_name = "apartments"
@@ -34,9 +34,21 @@ class ApartmentListView(ListView):
         ctx["q"] = self.request.GET.get("q", "")
         return ctx
 
-class ApartmentDetailView(DetailView):
+class ApartmentDetailView(LoginRequiredMixin, DetailView):
     model = Apartment
     template_name = "apartments/apartment_detail.html"
     context_object_name = "apartment"
     slug_field = "name"
     slug_url_kwarg = "name"
+
+def signup_view(request):
+    if request.method == "POST":
+        form = UserSignUpForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            login(request, new_user)
+            return redirect("apartment-list")
+    else:
+        form = UserSignUpForm()
+
+    return render(request, "apartments/signup.html", {"form": form})

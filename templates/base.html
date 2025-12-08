@@ -26,6 +26,24 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'apartment-list' %}">Home</a>
                     </li>
+
+                    <!-- AUTH BUTTONS -->
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link">Hello, {{ user.username }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{% url 'logout_urlpattern' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link nav-link p-0 m-0">Logout</button>
+                        </form>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login_urlpattern' %}">Login</a>
+                    </li>
+                    {% endif %}
+
                 </ul>
             </div>
         </div>
