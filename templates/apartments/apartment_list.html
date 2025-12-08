@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Apartment Listings</h1>
+
+<!-- Search Form -->
+<form method="get" action="">
+    <input type="text" name="q" placeholder="Search apartments..." value="{{ q }}">
+    <button type="submit">Search</button>
+    {% if q %}
+        <a href="{% url 'apartment-list' %}">Clear</a>
+    {% endif %}
+</form>
+
+<!-- Apartment List -->
+{% if apartments %}
+    <ul>
+        {% for apartment in apartments %}
+            <li>
+                <h2><a href="{% url 'apartment-detail' apartment.name %}">{{ apartment.name }}</a></h2>
+                <p><strong>Address:</strong> {{ apartment.address }}</p>
+                <p><strong>Rent:</strong> ${{ apartment.rent_amount }}</p>
+                <p><strong>Availability:</strong> 
+                    {% if apartment.is_available %}
+                        Available
+                    {% else %}
+                        Not Available
+                    {% endif %}
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No apartments found.</p>
+{% endif %}
+{% endblock %}

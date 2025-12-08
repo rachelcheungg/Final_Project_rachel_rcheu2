@@ -16,8 +16,12 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.contrib.auth.views import LoginView, LogoutView
+from Final_Project_rachel_rcheu2.views import redirect_root_view
 
 urlpatterns = [
+    path('', redirect_root_view),
     path("admin/", admin.site.urls),
+    path("apartments/", include("apartments.urls")),
 ]

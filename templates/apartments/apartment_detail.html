@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}{{ apartment.name }} - Apartment Finder{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title">{{ apartment.name }}</h1>
+        <p class="card-text"><strong>Address:</strong> {{ apartment.address }}</p>
+        <p class="card-text"><strong>Rent:</strong> ${{ apartment.rent_amount }}</p>
+        <p class="card-text"><strong>Availability:</strong> 
+            {% if apartment.is_available %} Available {% else %} Not Available {% endif %}
+        </p>
+        <p class="card-text"><strong>Coordinates:</strong> {{ apartment.latitude }}, {{ apartment.longitude }}</p>
+        <a href="{% url 'apartment-list' %}" class="btn btn-primary mt-3">Back to Listings</a>
+    </div>
+</div>
+{% endblock %}
