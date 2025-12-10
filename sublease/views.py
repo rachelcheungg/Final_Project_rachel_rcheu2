@@ -10,7 +10,7 @@ from .forms import SubleaseForm, SubleasePhotoForm
 class SubleaseCreateView(LoginRequiredMixin, CreateView):
     model = Sublease
     form_class = SubleaseForm
-    template_name = "sublease_create.html"
+    template_name = "sublease/sublease_create.html"
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -20,7 +20,7 @@ class SubleaseCreateView(LoginRequiredMixin, CreateView):
 class SubleaseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Sublease
     form_class = SubleaseForm
-    template_name = "sublease_edit.html"
+    template_name = "sublease/sublease_edit.html"
 
     def test_func(self):
         sublease = self.get_object()
@@ -29,7 +29,7 @@ class SubleaseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class SubleaseDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Sublease
-    template_name = "sublease_confirm_delete.html"
+    template_name = "sublease/sublease_confirm_delete.html"
     success_url = reverse_lazy("sublease_list")
 
     def test_func(self):
@@ -39,17 +39,17 @@ class SubleaseDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class SubleaseDetailView(DetailView):
     model = Sublease
-    template_name = "sublease_detail.html"
+    template_name = "sublease/sublease_detail.html"
 
 
 class SubleaseListView(ListView):
     model = Sublease
-    template_name = "sublease_list.html"
+    template_name = "sublease/sublease_list.html"
     ordering = ['-id']
 
 
 class SubleasePhotoUploadView(LoginRequiredMixin, UserPassesTestMixin, View):
-    template_name = "sublease_add_photo.html"
+    template_name = "sublease/sublease_add_photo.html"
 
     def test_func(self):
         sublease = get_object_or_404(Sublease, pk=self.kwargs["pk"])
