@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Subleases{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Available Subleases</h2>
+
+<a href="{% url 'sublease-create' %}" class="btn btn-primary mb-3">Post a Sublease</a>
+
+<div class="row">
+    {% for s in object_list %}
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+            {% if s.cover_photo %}
+            <img src="{{ s.cover_photo.url }}" class="card-img-top" alt="">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ s.address }}</h5>
+                <p>${{ s.price }}</p>
+                <a href="{% url 'sublease-detail' s.pk %}" class="btn btn-outline-primary btn-sm">View</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No subleases available.</p>
+    {% endfor %}
+</div>
+{% endblock %}
