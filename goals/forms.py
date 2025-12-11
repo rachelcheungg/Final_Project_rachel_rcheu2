@@ -4,7 +4,7 @@ from .models import FinancialTracker
 class GoalForm(forms.ModelForm):
     class Meta:
         model = FinancialTracker
-        fields = ['name', 'target_amount', 'deadline']
+        fields = ['name', 'target_amount']
 
 
 class UpdateSavingsForm(forms.ModelForm):
