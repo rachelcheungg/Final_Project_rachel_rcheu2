@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Messages{% endblock %}
+
+{% block content %}
+<h2 class="fw-semibold mb-4">Messages</h2>
+
+<div class="figma-card p-4">
+
+    {% for convo in conversations %}
+        {% with other=convo.user1 if convo.user2 == user else convo.user2 %}
+        <a href="{% url 'message-thread' convo.id %}" class="d-block mb-2">
+            <strong>{{ other.username }}</strong>
+        </a>
+        {% endwith %}
+    {% empty %}
+        <p class="text-muted">No conversations yet.</p>
+    {% endfor %}
+
+</div>
+{% endblock %}

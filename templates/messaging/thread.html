@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Chat{% endblock %}
+
+{% block content %}
+<h3 class="fw-semibold mb-4">Chat with 
+    {% with other=conversation.user1 if conversation.user2 == user else conversation.user2 %}
+        {{ other.username }}
+    {% endwith %}
+</h3>
+
+<div class="figma-card p-4 mb-4" style="height: 300px; overflow-y: scroll;">
+    {% for m in messages %}
+        <div class="mb-3">
+            <strong>{{ m.sender.username }}:</strong> {{ m.text }}
+            <div class="text-muted small">{{ m.timestamp }}</div>
+        </div>
+    {% endfor %}
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+    <textarea name="text" class="figma-input w-100 mb-2" placeholder="Type a message..."></textarea>
+    <button class="figma-add-btn w-100">Send</button>
+</form>
+
+{% endblock %}
