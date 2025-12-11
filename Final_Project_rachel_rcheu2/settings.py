@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "apartments",
     "sublease",
     "goals",
+    "widget_tweaks",
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,6 @@ LOGIN_URL = "login_urlpattern"
 
 LOGIN_REDIRECT_URL = 'apartment-list'
 LOGOUT_REDIRECT_URL = 'login_urlpattern'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

@@ -1,13 +1,24 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 {% block title %}Add Photo{% endblock %}
 
 {% block content %}
-<h2>Add Photo</h2>
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
+<h2 class="fw-semibold mb-4">Add Photo to Sublease</h2>
 
-    <button type="submit" class="btn btn-primary">Upload</button>
-</form>
+<div class="figma-card p-4">
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label fw-medium">Upload Image</label>
+            {{ form.image|add_class:"figma-input w-100" }}
+        </div>
+
+        <button class="figma-add-btn w-100">Upload Photo</button>
+    </form>
+
+</div>
+
 {% endblock %}

@@ -11,6 +11,7 @@ class SubleaseCreateView(LoginRequiredMixin, CreateView):
     model = Sublease
     form_class = SubleaseForm
     template_name = "sublease/sublease_create.html"
+    success_url = reverse_lazy("sublease-list")
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -30,7 +31,7 @@ class SubleaseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class SubleaseDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Sublease
     template_name = "sublease/sublease_confirm_delete.html"
-    success_url = reverse_lazy("sublease_list")
+    success_url = reverse_lazy("sublease-list")
 
     def test_func(self):
         sublease = self.get_object()
