@@ -1,36 +1,53 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-<h1>Apartment Listings</h1>
 
-<!-- Search Form -->
-<form method="get" action="">
-    <input type="text" name="q" placeholder="Search apartments..." value="{{ q }}">
-    <button type="submit">Search</button>
-    {% if q %}
-        <a href="{% url 'apartment-list' %}">Clear</a>
-    {% endif %}
+<h4 class="fw-semibold mb-1">Available Apartments</h4>
+<p class="text-muted mb-4">Browse apartments</p>
+
+<!-- Search bar -->
+<form method="get" class="mb-4 d-flex gap-2">
+    <input type="text" name="q" value="{{ q }}" placeholder="Search..." class="form-control">
+    <button class="btn btn-primary">Search</button>
 </form>
 
-<!-- Apartment List -->
-{% if apartments %}
-    <ul>
-        {% for apartment in apartments %}
-            <li>
-                <h2><a href="{% url 'apartment-detail' apartment.name %}">{{ apartment.name }}</a></h2>
-                <p><strong>Address:</strong> {{ apartment.address }}</p>
-                <p><strong>Rent:</strong> ${{ apartment.rent_amount }}</p>
-                <p><strong>Availability:</strong>
-                    {% if apartment.is_available %}
-                        Available
-                    {% else %}
-                        Not Available
-                    {% endif %}
+<div class="row g-4">
+    {% for apt in apartments %}
+    <div class="col-md-4">
+
+        <div class="apartment-card">
+            {% if apt.image_url %}
+                <img src="{{ apt.image_url }}" class="apartment-img">
+            {% else %}
+                <img src="{% static 'images/placeholder.jpg' %}" class="apartment-img">
+            {% endif %}
+
+            <div class="apartment-card-body">
+                <h5 class="fw-semibold">{{ apt.name }}</h5>
+
+                <p class="text-muted small mb-1">
+                    📍 {{ apt.address }}
                 </p>
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No apartments found.</p>
-{% endif %}
+
+                <p class="small text-muted mb-2">
+                    🛏 {{ apt.bedrooms }} Bed &nbsp; | &nbsp; 🛁 {{ apt.bathrooms }} Bath
+                </p>
+
+                <p class="small mb-1">Starting at</p>
+                <p class="price-text">${{ apt.rent_amount }}/mo</p>
+
+                <a href="{% url 'apartment-detail' apt.name %}"
+                   class="btn btn-primary btn-sm mt-2 w-100">
+                    View Details
+                </a>
+            </div>
+        </div>
+
+    </div>
+    {% empty %}
+        <p>No apartments available.</p>
+    {% endfor %}
+</div>
+
 {% endblock %}
