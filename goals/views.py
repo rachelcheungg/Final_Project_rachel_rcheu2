@@ -3,15 +3,16 @@ from . import models
 from .models import FinancialTracker
 from .forms import GoalForm, UpdateSavingsForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 
 @login_required
 def goal_list(request):
     filter_option = request.GET.get("filter", "all")
 
     if filter_option == "completed":
-        goals = FinancialTracker.objects.filter(user=request.user, current_amount__gte=models.F('target_amount'))
+        goals = FinancialTracker.objects.filter(user=request.user, current_amount__gte=F('target_amount'))
     elif filter_option == "in progress":
-        goals = FinancialTracker.objects.filter(user=request.user, current_amount__lt=models.F('target_amount'))
+        goals = FinancialTracker.objects.filter(user=request.user, current_amount__lt=F('target_amount'))
     else:
         goals = FinancialTracker.objects.filter(user=request.user)
 
