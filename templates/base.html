@@ -31,9 +31,12 @@
                         <a class="nav-link" href="{% url 'sublease-list' %}">Subleases</a>
                     </li>
 
-
                     <!-- AUTH BUTTONS -->
                     {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'goal-list' %}">Financial Goals</a>
+                    </li>
+
                     <li class="nav-item">
                         <span class="nav-link">Hello, {{ user.username }}</span>
                     </li>
@@ -46,12 +49,6 @@
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login_urlpattern' %}">Login</a>
-                    </li>
-                    {% endif %}
-
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'sublease-create' %}">Post Sublease</a>
                     </li>
                     {% endif %}
 

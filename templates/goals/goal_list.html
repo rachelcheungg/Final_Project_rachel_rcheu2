@@ -1,10 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}My Goals | PlexFind{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">Your Financial Goals</h2>
+
+<div class="mb-3">
+    <a href="?filter=all" class="btn btn-outline-secondary btn-sm">All</a>
+    <a href="?filter=inprogress" class="btn btn-outline-primary btn-sm">In Progress</a>
+    <a href="?filter=completed" class="btn btn-outline-success btn-sm">Completed</a>
+</div>
+
+<a href="{% url 'create-goal' %}" class="btn btn-dark mb-4">+ Add New Goal</a>
+
+{% for goal in goals %}
+<div class="card mb-3 p-3">
+    <h4>{{ goal.name }}</h4>
+
+    <p class="mb-1">Target: ${{ goal.target_amount }}</p>
+    <p class="mb-2">Saved: ${{ goal.current_amount }}</p>
+
+    <div class="progress mb-3" style="height: 20px;">
+        <div class="progress-bar {% if goal.is_completed %}bg-success{% else %}bg-info{% endif %}"
+             role="progressbar"
+             style="width: {{ goal.progress_percentage }}%;">
+            {{ goal.progress_percentage|floatformat:0 }}%
+        </div>
+    </div>
+
+    <a href="{% url 'update-savings' goal.pk %}" class="btn btn-outline-dark btn-sm">Update Savings</a>
+</div>
+{% empty %}
+<p>No goals yet.</p>
+{% endfor %}
+
+{% endblock %}
