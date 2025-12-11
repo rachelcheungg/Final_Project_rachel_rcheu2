@@ -25,7 +25,7 @@ def create_goal(request):
             goal = form.save(commit=False)
             goal.user = request.user
             goal.save()
-            return redirect("goal_list")
+            return redirect("goal-list")
     else:
         form = GoalForm()
     return render(request, "goals/create_goal.html", {"form": form})
@@ -37,7 +37,7 @@ def update_savings(request, pk):
         form = UpdateSavingsForm(request.POST, instance=goal)
         if form.is_valid():
             form.save()
-            return redirect("goal_list")
+            return redirect("goal-list")
     else:
         form = UpdateSavingsForm(instance=goal)
     return render(request, "goals/update_savings.html", {"form": form, "goal": goal})
