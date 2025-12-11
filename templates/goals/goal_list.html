@@ -15,6 +15,25 @@
     </a>
 </div>
 
+<!-- Summary Overview -->
+<div class="card p-3 mb-4">
+    <h5 class="mb-3">Summary Overview</h5>
+
+    <p><strong>Total Goals:</strong> {{ totals.num_goals }}</p>
+    <p><strong>Completed Goals:</strong> {{ totals.completed_count }}</p>
+
+    <p><strong>Total Saved:</strong> ${{ totals.total_saved|default:"0" }}</p>
+    <p><strong>Total Target:</strong> ${{ totals.total_target|default:"0" }}</p>
+
+    <p><strong>Average Progress:</strong>
+        {% if avg_progress %}
+            {{ avg_progress|floatformat:1 }}%
+        {% else %}
+            0%
+        {% endif %}
+    </p>
+</div>
+
 {% if goals %}
 <div class="row g-4">
     {% for goal in goals %}
@@ -35,13 +54,13 @@
             <!-- Progress Bar -->
             <div class="figma-progress mb-2">
                 <div class="figma-progress-fill
-                {% if goal.is_completed %} completed {% endif %}"
-                     style="width: {{ goal.progress_percentage }}%;">
+                    {% if goal.is_completed %} completed {% endif %}"
+                    style="width: {{ goal.progress_percent }}%;">
                 </div>
             </div>
 
             <p class="text-end fw-semibold text-muted small">
-                {{ goal.progress_percentage|floatformat:0 }}%
+                {{ goal.progress_percent|floatformat:0 }}%
             </p>
 
             <a href="{% url 'update-savings' goal.pk %}" class="btn figma-contribute-btn mt-3">
