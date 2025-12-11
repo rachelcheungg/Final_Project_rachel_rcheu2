@@ -9,7 +9,7 @@ from .models import Conversation, Message
 def inbox(request):
     conversations = Conversation.objects.filter(user1=request.user) | \
                     Conversation.objects.filter(user2=request.user)
-    return render(request, "messages_app/inbox.html", {"conversations": conversations})
+    return render(request, "messaging/inbox.html", {"conversations": conversations})
 
 
 @login_required
@@ -46,4 +46,4 @@ def conversation_view(request, conversation_id):
 
     messages = convo.messages.order_by("timestamp")
 
-    return render(request, "messages_app/thread.html", {"conversation": convo, "messages": messages})
+    return render(request, "messaging/thread.html", {"conversation": convo, "messaging": messages})

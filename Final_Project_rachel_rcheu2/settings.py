@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "sublease",
     "goals",
     "widget_tweaks",
+    "messaging",
 ]
 
 MIDDLEWARE = [

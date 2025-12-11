@@ -7,11 +7,21 @@
 <div class="figma-card p-4">
 
     {% for convo in conversations %}
-        {% with other=convo.user1 if convo.user2 == user else convo.user2 %}
-        <a href="{% url 'message-thread' convo.id %}" class="d-block mb-2">
-            <strong>{{ other.username }}</strong>
-        </a>
-        {% endwith %}
+
+        {% if convo.user1 == user %}
+            {% with other=convo.user2 %}
+                <a href="{% url 'message-thread' convo.id %}" class="d-block mb-2">
+                    <strong>{{ other.username }}</strong>
+                </a>
+            {% endwith %}
+        {% else %}
+            {% with other=convo.user1 %}
+                <a href="{% url 'message-thread' convo.id %}" class="d-block mb-2">
+                    <strong>{{ other.username }}</strong>
+                </a>
+            {% endwith %}
+        {% endif %}
+
     {% empty %}
         <p class="text-muted">No conversations yet.</p>
     {% endfor %}
