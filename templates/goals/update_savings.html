@@ -1,17 +1,21 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}Update Savings | PlexFind{% endblock %}
 
 {% block content %}
 
-<h2 class="mb-4">Update Savings for {{ goal.name }}</h2>
+<h2 class="fw-semibold mb-3">Add Contribution to {{ goal.name }}</h2>
 
-<div class="card p-4 shadow-sm">
+<div class="figma-card p-4">
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
 
-        <button class="btn btn-primary">Update</button>
+        <div class="mb-3">
+            <label class="form-label fw-semibold">New Amount Saved ($)</label>
+            {{ form.current_amount }}
+        </div>
+
+        <button class="figma-add-btn w-100 mt-2">Update Savings</button>
     </form>
 </div>
 

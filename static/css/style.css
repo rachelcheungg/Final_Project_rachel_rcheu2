@@ -1,22 +1,45 @@
-/* Tabs */
+/*---NAVIGATION TABS---*/
 .figma-tab {
-    padding-bottom: 0.5rem;
+    position: relative;
+    padding: 0.5rem 0;
+    font-size: 1rem;
     font-weight: 500;
     color: #6c757d;
     text-decoration: none;
-    border-bottom: 2px solid transparent;
+    transition: color 0.2s ease;
 }
 
 .figma-tab:hover {
-    color: #000;
+    color: #3a3a3a;
 }
 
 .figma-tab.active {
     color: #0d6efd;
-    border-bottom: 2px solid #0d6efd;
 }
 
-/* Apartment Card */
+.figma-tab.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 3px;
+    background-color: #0d6efd;
+    border-radius: 4px;
+}
+
+.figma-tab:hover::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 3px;
+    background-color: rgba(13, 110, 253, 0.3);
+    border-radius: 4px;
+}
+
+/*---APARTMENT LISTING CARDS---*/
 .apartment-card {
     border-radius: 12px;
     overflow: hidden;
@@ -42,4 +65,95 @@
 .price-text {
     color: #0d6efd;
     font-weight: 600;
+}
+
+/*---FINANCIAL GOAL CARDS---*/
+.figma-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: 0.2s ease;
+}
+
+.figma-card:hover {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.figma-header {
+    font-weight: 600;
+    font-size: 1.75rem;
+}
+
+.figma-subtitle {
+    color: #6c757d;
+    margin-top: -4px;
+}
+
+.figma-add-btn,
+.figma-contribute-btn {
+    background: #3B82F6;
+    color: white;
+    font-weight: 500;
+    border-radius: 10px;
+    border: none;
+    transition: background 0.1s ease;
+}
+
+.figma-add-btn {
+    padding: 10px 20px;
+}
+
+.figma-contribute-btn {
+    padding: 10px;
+    width: 100%;
+}
+
+.figma-add-btn:hover,
+.figma-contribute-btn:hover {
+    background: #2563EB;
+}
+
+.figma-btn-cancel {
+    background: #EFF4FF;
+    color: #2563eb;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-weight: 500;
+}
+
+.figma-input {
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+}
+
+.figma-icon-circle {
+    width: 48px;
+    height: 48px;
+    background: #EEF2FF;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+/* ---PROGRESS BAR--- */
+.figma-progress {
+    height: 10px;
+    border-radius: 50px;
+    background: #e5e7eb;
+    overflow: hidden;
+}
+
+.figma-progress-fill {
+    height: 100%;
+    background: #3B82F6;
+    border-radius: 6px;
+    transition: width 0.3s;
+}
+
+.figma-progress-fill.completed {
+    background: #10B981;
 }
