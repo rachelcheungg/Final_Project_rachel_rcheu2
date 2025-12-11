@@ -32,6 +32,17 @@
             0%
         {% endif %}
     </p>
+
+    <div class="d-flex gap-2 mb-4">
+    <a href="{% url 'export-goals-csv' %}" class="btn btn-outline-dark btn-sm">
+        Download CSV
+    </a>
+
+    <a href="{% url 'export-goals-json' %}" class="btn btn-outline-primary btn-sm">
+        Download JSON
+    </a>
+    </div>
+
 </div>
 
 {% if goals %}

@@ -4,6 +4,9 @@ from .models import FinancialTracker
 from .forms import GoalForm, UpdateSavingsForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import F, Sum, Count, Avg, ExpressionWrapper, FloatField, Q
+import csv
+from django.http import HttpResponse
+from django.http import JsonResponse
 
 @login_required
 def goal_list(request):
@@ -77,3 +80,42 @@ def update_savings(request, pk):
     else:
         form = UpdateSavingsForm(instance=goal)
     return render(request, "goals/update_savings.html", {"form": form, "goal": goal})
+
+
+@login_required
+def export_goals_csv(request):
+    goals = FinancialTracker.objects.filter(user=request.user)
+
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="financial_goals.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(["Goal Name", "Current Amount", "Target Amount", "Progress (%)"])
+
+    for g in goals:
+        progress = (g.current_amount / g.target_amount) * 100 if g.target_amount else 0
+        writer.writerow([g.name, g.current_amount, g.target_amount, round(progress, 2)])
+
+    return response
+
+
+@login_required
+def export_goals_json(request):
+    goals = FinancialTracker.objects.filter(user=request.user).annotate(
+        progress=ExpressionWrapper(
+            (F("current_amount") * 100.0) / F("target_amount"),
+            output_field=FloatField()
+        )
+    )
+
+    data = [
+        {
+            "name": g.name,
+            "current_amount": float(g.current_amount),
+            "target_amount": float(g.target_amount),
+            "progress_percent": round(g.progress, 2)
+        }
+        for g in goals
+    ]
+
+    return JsonResponse({"goals": data}, safe=False)
