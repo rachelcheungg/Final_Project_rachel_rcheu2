@@ -40,7 +40,10 @@
                     <a href="{% url 'sublease-add-photo' object.pk %}" class="figma-contribute-btn">
                         + Add Photo
                     </a>
-                    <a href="{% url 'start-conversation' object.pk %}" class="figma-contribute-btn mt-3">
+                </div>
+                {% else %}
+                <div class="mt-3">
+                    <a href="{% url 'start-conversation' object.pk %}" class="figma-contribute-btn w-100">
                         Message Subleaser
                     </a>
                 </div>

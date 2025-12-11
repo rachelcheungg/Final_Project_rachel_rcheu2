@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from sublease.models import Sublease
 from .models import Conversation, Message
-
+from django.db.models import Q
 
 @login_required
 def inbox(request):
@@ -21,9 +21,8 @@ def start_conversation(request, sublease_id):
         return redirect("message-inbox")
 
     convo = Conversation.objects.filter(
-        user1=request.user, user2=other_user
-    ).first() or Conversation.objects.filter(
-        user1=other_user, user2=request.user
+        Q(user1=request.user, user2=other_user) |
+        Q(user1=other_user, user2=request.user)
     ).first()
 
     if convo is None:
@@ -44,6 +43,6 @@ def conversation_view(request, conversation_id):
         if text:
             Message.objects.create(conversation=convo, sender=request.user, text=text)
 
-    messages = convo.messages.order_by("timestamp")
+    messages = convo.messaging.order_by("timestamp")
 
     return render(request, "messaging/thread.html", {"conversation": convo, "messaging": messages})
