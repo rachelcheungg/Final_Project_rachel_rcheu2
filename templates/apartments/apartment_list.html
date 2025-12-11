@@ -20,7 +20,7 @@
                 <h2><a href="{% url 'apartment-detail' apartment.name %}">{{ apartment.name }}</a></h2>
                 <p><strong>Address:</strong> {{ apartment.address }}</p>
                 <p><strong>Rent:</strong> ${{ apartment.rent_amount }}</p>
-                <p><strong>Availability:</strong> 
+                <p><strong>Availability:</strong>
                     {% if apartment.is_available %}
                         Available
                     {% else %}
