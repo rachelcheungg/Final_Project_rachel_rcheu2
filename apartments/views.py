@@ -1,5 +1,7 @@
 import requests
 import math
+
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
@@ -61,10 +63,13 @@ class ChampaignApartmentList(LoginRequiredMixin, View):
     def get(self, request):
         url = "https://gisportal.champaignil.gov/ms/rest/services/Open_Data/Open_Data/MapServer/8/query"
 
+        query = request.GET.get("q", "").strip()
+        page_number = request.GET.get("page", 1)
+
         params = {
             "where": "1=1",
             "outFields": "*",
-            "f": "geojson"
+            "f": "geojson",
         }
 
         apartments = []
@@ -77,21 +82,31 @@ class ChampaignApartmentList(LoginRequiredMixin, View):
             for feature in data.get("features", []):
                 props = feature.get("properties", {})
                 geom = feature.get("geometry", {})
-
                 coords = geom.get("coordinates", [])
+
                 if not coords or not coords[0]:
                     continue
 
                 try:
-                    first_point = coords[0][0]
-                    lon = float(first_point[0])
-                    lat = float(first_point[1])
+                    lon, lat = coords[0][0]
                 except (IndexError, TypeError, ValueError):
                     continue
 
+                name = (
+                    props.get("Complex_Name")
+                    or props.get("Building_Name")
+                    or "Unnamed Apartment"
+                )
+                address = props.get("Address", "")
+
+                # 🔍 SEARCH FILTER
+                if query:
+                    if query.lower() not in name.lower() and query.lower() not in address.lower():
+                        continue
+
                 apartments.append({
-                    "name": props.get("Complex_Name") or props.get("Building_Name") or "Unnamed Apartment",
-                    "address": props.get("Address") or "Address not available",
+                    "name": name,
+                    "address": address or "Address not available",
                     "units": props.get("Units"),
                     "stories": props.get("Stories"),
                     "latitude": lat,
@@ -105,8 +120,15 @@ class ChampaignApartmentList(LoginRequiredMixin, View):
                 {"error": str(e), "apartments": []},
             )
 
+        paginator = Paginator(apartments, 25)
+        page_obj = paginator.get_page(page_number)
+
         return render(
             request,
             "apartments/champaign_apartments.html",
-            {"apartments": apartments},
+            {
+                "apartments": page_obj,
+                "page_obj": page_obj,
+                "query": query,
+            },
         )
