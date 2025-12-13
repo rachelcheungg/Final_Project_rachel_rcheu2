@@ -130,7 +130,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_URL = "login_urlpattern"
 
-LOGIN_REDIRECT_URL = 'apartment-list'
+LOGIN_REDIRECT_URL = 'champaign-apartments'
 LOGOUT_REDIRECT_URL = 'login_urlpattern'
 
 MEDIA_URL = '/media/'

@@ -1,3 +1,5 @@
+import requests
+import math
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
@@ -13,7 +15,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms_auth import UserSignUpForm
 from django.views.generic import ListView
 from django.db.models import Q
-from .models import Apartment
+from django.http import JsonResponse
 
 class ApartmentListView(LoginRequiredMixin, ListView):
     model = Apartment
@@ -34,6 +36,7 @@ class ApartmentListView(LoginRequiredMixin, ListView):
         ctx["q"] = self.request.GET.get("q", "")
         return ctx
 
+
 class ApartmentDetailView(LoginRequiredMixin, DetailView):
     model = Apartment
     template_name = "apartments/apartment_detail.html"
@@ -52,3 +55,58 @@ def signup_view(request):
         form = UserSignUpForm()
 
     return render(request, "apartments/signup.html", {"form": form})
+
+
+class ChampaignApartmentList(LoginRequiredMixin, View):
+    def get(self, request):
+        url = "https://gisportal.champaignil.gov/ms/rest/services/Open_Data/Open_Data/MapServer/8/query"
+
+        params = {
+            "where": "1=1",
+            "outFields": "*",
+            "f": "geojson"
+        }
+
+        apartments = []
+
+        try:
+            response = requests.get(url, params=params, timeout=5)
+            response.raise_for_status()
+            data = response.json()
+
+            for feature in data.get("features", []):
+                props = feature.get("properties", {})
+                geom = feature.get("geometry", {})
+
+                coords = geom.get("coordinates", [])
+                if not coords or not coords[0]:
+                    continue
+
+                try:
+                    first_point = coords[0][0]
+                    lon = float(first_point[0])
+                    lat = float(first_point[1])
+                except (IndexError, TypeError, ValueError):
+                    continue
+
+                apartments.append({
+                    "name": props.get("Complex_Name") or props.get("Building_Name") or "Unnamed Apartment",
+                    "address": props.get("Address") or "Address not available",
+                    "units": props.get("Units"),
+                    "stories": props.get("Stories"),
+                    "latitude": lat,
+                    "longitude": lon,
+                })
+
+        except requests.RequestException as e:
+            return render(
+                request,
+                "apartments/champaign_apartments.html",
+                {"error": str(e), "apartments": []},
+            )
+
+        return render(
+            request,
+            "apartments/champaign_apartments.html",
+            {"apartments": apartments},
+        )
