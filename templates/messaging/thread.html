@@ -1,7 +1,12 @@
 {% extends "base.html" %}
+{% load tz %}
 {% block title %}Chat{% endblock %}
 
 {% block content %}
+
+<a href="{% url 'message-inbox' %}" class="text-decoration-none text-muted mb-3 d-inline-block">
+    ← Back to Messages
+</a>
 
 <h3 class="fw-semibold mb-4">
     Chat with
@@ -12,19 +17,48 @@
     {% endif %}
 </h3>
 
-<div class="figma-card p-4 mb-4" style="height: 300px; overflow-y: scroll;">
+<div id="message-container"
+     class="figma-card p-4 mb-4"
+     style="height: 300px; overflow-y: auto;">
+
     {% for m in messaging %}
-        <div class="mb-3">
-            <strong>{{ m.sender.username }}:</strong> {{ m.text }}
-            <div class="text-muted small">{{ m.timestamp }}</div>
+        <div class="d-flex mb-3 {% if m.sender == user %}justify-content-end{% endif %}">
+            <div class="{% if m.sender == user %}bg-primary text-white{% else %}bg-light{% endif %} p-2 rounded"
+                 style="max-width: 70%;">
+
+                <div>{{ m.text }}</div>
+
+                <div class="text-muted small mt-1" style="font-size: 0.75rem;">
+                    {{ m.timestamp|localtime|date:"M j, g:i A" }}
+                </div>
+            </div>
         </div>
+    {% empty %}
+        <p class="text-muted">No messages yet. Say hi 👋</p>
     {% endfor %}
 </div>
 
 <form method="POST">
     {% csrf_token %}
-    <textarea name="text" class="figma-input w-100 mb-2" placeholder="Type a message..."></textarea>
+    <textarea name="text"
+              id="chat-input"
+              class="figma-input w-100 mb-2"
+              rows="2"
+              placeholder="Type a message..."
+              required></textarea>
     <button class="figma-add-btn w-100">Send</button>
 </form>
+
+<script>
+    const msgBox = document.getElementById("message-container");
+    msgBox.scrollTop = msgBox.scrollHeight;
+
+    document.getElementById("chat-input").addEventListener("keydown", function(e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            this.form.submit();
+        }
+    });
+</script>
 
 {% endblock %}

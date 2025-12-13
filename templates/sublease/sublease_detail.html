@@ -2,6 +2,10 @@
 {% block title %}Sublease Details{% endblock %}
 
 {% block content %}
+<a href="{% url 'sublease-list' %}"
+   class="text-decoration-none text-muted mb-3 d-inline-block">
+    ← Back to Subleases
+</a>
 
 <!-- Header -->
 <h2 class="fw-semibold mb-4">{{ object.address }}</h2>
