@@ -1,11 +1,16 @@
+data/db.sqlite3
+staticfiles/
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.pyo
+*.pyd
 # Byte-compiled / cache
-__pycache_/
 *.py[cod]
-*.sqlite3
 # Environment
 .env
 *.env
-venv/
 *.egg-info/
 .idea/
 .DS_Store
