@@ -1,0 +1,23 @@
+Key lessons I've learned:
+* This semester, I learned the core framework of building a web application using Django,
+  including how models, views, and templates each serve distinct roles within the app.
+* I also learned how these components interact with one another, such as how data flows from the
+  database through views and into templates, and how user actions trigger updates across the system.
+
+Challenges faced
+* For this project, I faced several challenges with how the UI would end up turning out. I didn't have
+  experience using CSS and HTML prior to this class, so getting the UI to look the way I wanted was hard.
+* Another challenge I faced was with implementing some of my features. For instance, I didn't know how to
+  allow photo uploads, so I asked ChatGPT to help me implement that. Additionally, sometimes I would use
+  the wrong related name in the templates, and it would throw me a 404 error.
+
+Future improvements
+* Unfortunately, the apartment listings page did not turn out how I wanted it to. It was hard for me to find
+  free APIs on apartment listings, and in all honesty, I don't feel fully confident on integrating APIs in
+  into my project. If I had more time, I'd want to learn more about APIs and how I can use them in my project.
+  Additionally, I would have wanted to improve the apartment listings page to include photos of apartments and
+  more details, such as rent prices, bedroom ranges, amenities, etc. My original goal was to have it look like
+  the sublease page.
+* Other future improvements are very minor things, such as allowing users to archive goals they've completed,
+  or having the messages page alert the user when there's a new message and giving message previews (like on
+  iMessage). I would also add a more detailed search feature for the apartment listing page and sublease page.
