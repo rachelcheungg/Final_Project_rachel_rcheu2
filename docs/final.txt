@@ -10,6 +10,11 @@ Challenges faced
 * Another challenge I faced was with implementing some of my features. For instance, I didn't know how to
   allow photo uploads, so I asked ChatGPT to help me implement that. Additionally, sometimes I would use
   the wrong related name in the templates, and it would throw me a 404 error.
+* When I deployed the app, I couldn't see the apartment data. The application originally fetched live
+  apartment data from the City of Champaign's public GIS API. However, live requests were blocked in
+  production. I used AI to help me fix this with the following steps: created a one-time script to download
+  the GIS data locally, saved the API response as a local cache file in the project, updated the Django view
+  to stop making live HTTP requests.
 
 Future improvements
 * Unfortunately, the apartment listings page did not turn out how I wanted it to. It was hard for me to find

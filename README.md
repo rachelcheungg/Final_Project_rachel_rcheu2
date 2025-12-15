@@ -26,7 +26,12 @@ Topics implemented from Table 3:
 - Data Presentation & Export
 - User Authentication for External Users
 
-Screenshots of the app and deployed version
+Web App Screenshots:
+![Login Page](docs/screenshots/login.png)
+![Apartment Listings Page](docs/screenshots/apartment_listings.png)
+![Sublease Listings Page](docs/screenshots/sublease_listings.png)
+![Financial Goals Page](docs/screenshots/financial_goals.png)
+![Messages](docs/screenshots/messages.png)
 
 Statement of AI usage:
 * AI was used in this project to help me create/update/modify features
